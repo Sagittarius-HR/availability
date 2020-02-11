@@ -17,6 +17,7 @@ class App extends React.Component {
 
     this.state = {
       breedId: 1,
+      breed: "A Dog Breed",
       dogs: [],
       location: {
         on: false,
@@ -35,7 +36,6 @@ class App extends React.Component {
       }
     })
     .then((res) => {
-      console.log('Response from dogFinder: ', res);
       this.setState({
         dogs: res.data
       })
@@ -68,8 +68,6 @@ class App extends React.Component {
   }
 
   coordinates(position) {
-    console.log(position.coords.latitude, '/', position.coords.longitude)
-    console.log('Old state:', this.state)
     this.setState({
       location: {
         on: true,
@@ -78,21 +76,58 @@ class App extends React.Component {
       }
     
     })
-    console.log('New state:', this.state)
+  }
+
+  getBreedName(breedId) {
+    let queryString = `?id=${breedId}`;
+    axios.get(`/api/oneBreed/${queryString}`)
+    .then((res) => {
+      console.log('res:', res)
+      this.setState({
+        breed: res.data.about.breedName
+      })
+    })
+    .catch((err) => {
+      if (err) { 
+        this.setState({
+          breed: "Bernese Mountain Dog"
+        })
+      }
+    })
+  }
+
+  setBreedId() {
+
+    if (document.getElementById("breedId")) {
+      var breedId = document.getElementById("breedId").value;
+    } else {
+      //if this is running on its own and ID is not available from proxy
+      var breedId = Math.ceil(Math.random() * 100);
+    } 
+
+    this.setState({
+      breedId: breedId 
+    })
   }
   
+  componentWillMount () {
+    //will remove this later when breed Id is attached to URL
+    this.setBreedId();
+  }
+
   componentDidMount() {
     this.dogFinder();
     this.getLocation();
+    this.getBreedName(this.state.breedId); //this will eventually be the id in the URL
   }
 
   render() {
     return (
       <div>
         <StyledDiv>
-          <h1>{this.state.breedId}s Availabile Nearby</h1>
+          <h1>{this.state.breed}s Availabile Nearby</h1>
         </StyledDiv>
-        <Dogs dogs={this.state.dogs} breedId={this.state.breedId} location={this.state.location}/>
+        <Dogs dogs={this.state.dogs} breedId={this.state.breedId} breed={this.state.breed} location={this.state.location}/>
       </div>
     )
   }

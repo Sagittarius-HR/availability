@@ -31,8 +31,8 @@ function MeetThem(props) {
       <br></br>
       <br></br>
       <br></br>
-      <br></br>
-      {Math.max(props.dogs.length - 4, 0)} more {props.breedId}s available for adoption
+      {Math.max(props.dogs.length - 4, 0)} more {props.breed}s <br></br>
+      available for adoption
       <hr></hr>
       <br></br>
       <StyledSubDiv>

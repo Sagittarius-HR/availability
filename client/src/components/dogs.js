@@ -18,7 +18,6 @@ function Dogs(props) {
     const refinedDogs = dogs.slice(0,4);
 
     const dogList = refinedDogs.map((dog) => {
-      {console.log('dog:', dog, 'id: ', dog._id )}
       return <Dog dog={dog} key={dog._id}/>
     })
   
@@ -49,7 +48,6 @@ function Dogs(props) {
     const locateDogs = props.dogs.map((dog)=>{
       var latAndLongitude = dog.location.split('/');
       var dist = findDistance(props.location.latitude, props.location.longitude, Number(latAndLongitude[0]), Number(latAndLongitude[1]));
-      console.log('DISTANCE: ', dist)
       dog.dist = dist;
       return dog;
     });
@@ -99,7 +97,6 @@ function Dogs(props) {
     const refinedDogs = onlyNearbyDogs.slice(0,4);
 
     const dogList = refinedDogs.map((dog) => {
-      {console.log('dog:', dog, 'id: ', dog._id )}
       return <Dog dog={dog} key={dog._id}/>
     })
   
@@ -107,7 +104,7 @@ function Dogs(props) {
       <StyledDiv>
         <div className='dogList'>
           {dogList}
-          <MeetThem dogs={onlyNearbyDogs} breedId={props.breedId} />
+          <MeetThem dogs={onlyNearbyDogs} breedId={props.breedId} breed={props.breed} />
         </div>
       </StyledDiv>
     );

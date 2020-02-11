@@ -20,7 +20,6 @@ class Dog extends React.Component {
       <div>
         <img src={this.props.dog.imageURL} height='228' width='228'></img>
         <NameCard name={this.props.dog.name} dist={this.props.dog.dist}/>
-        {console.log('dogprops:', this.props)}
       </div>
       </StyledDiv>
     )
