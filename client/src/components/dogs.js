@@ -5,6 +5,7 @@ import style from 'styled-components'
 
 const StyledDiv = style.div`
   width: 80%;
+  height: 300px;
   margin: auto;
 `;
 
