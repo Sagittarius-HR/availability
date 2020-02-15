@@ -4,7 +4,11 @@ import style from 'styled-components';
 var StyledDiv = style.div`
   text-align: center;
   color: #6504b5;
-  background-color: white
+  background-color: white;
+  width: 100%;
+  height: 20%;
+  overflow: auto;
+  border-radius:0px 0px 10px 10px;
 `;
 
 function NameCard(props) {
@@ -15,7 +19,7 @@ function NameCard(props) {
       <div>
         {props.name}
         <br></br>
-        {Math.floor(props.dist)} Miles Away
+        {/* {Math.floor(props.dist)} Miles Away */}
       </div>
       <br></br>
       </StyledDiv>
