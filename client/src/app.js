@@ -11,6 +11,8 @@ const StyledDiv = style.div`
   text-align: center;
 `;
 
+var url = window.location.hostname === 'localhost' ? 'http://localhost' : 'http://ec2-54-185-0-112.us-west-2.compute.amazonaws.com';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -30,7 +32,7 @@ class App extends React.Component {
   }
 
   dogFinder() {
-    axios.get('/getAllMatchingBreed', {
+    axios.get(url + ':3003/getAllMatchingBreed', {
       params: {
         key: this.state.breedId
       }
@@ -80,7 +82,7 @@ class App extends React.Component {
 
   getBreedName(breedId) {
     let queryString = `?id=${breedId}`;
-    axios.get(`/api/oneBreed/${queryString}`)
+    axios.get(url + `:3002/api/oneBreed/${queryString}`)
     .then((res) => {
       console.log('res:', res)
       this.setState({
