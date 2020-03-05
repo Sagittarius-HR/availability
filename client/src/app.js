@@ -11,7 +11,7 @@ const StyledDiv = style.div`
   text-align: center;
 `;
 
-var url = window.location.hostname === 'localhost' ? 'http://localhost' : 'http://ec2-54-185-0-112.us-west-2.compute.amazonaws.com';
+var url = window.location.hostname === 'localhost' ? 'http://localhost' : 'http://ec2-54-90-115-26.compute-1.amazonaws.com';
 
 class App extends React.Component {
   constructor(props) {
