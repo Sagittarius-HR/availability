@@ -16,6 +16,8 @@ const StyledDiv = style.div`
 
 var url = window.location.hostname === 'localhost' ? 'http://localhost' : 'http://ec2-54-90-115-26.compute-1.amazonaws.com';
 
+console.log('url', url);
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -26,8 +28,8 @@ class App extends React.Component {
       dogs: [],
       location: {
         on: false,
-        latitude: 0,
-        longitude: 0
+        latitude: 40.930,
+        longitude: -74.041
       }
     }
 
@@ -101,29 +103,21 @@ class App extends React.Component {
     })
   }
 
-  setBreedId() {
-
-    if (document.getElementById("breedId")) {
-      var breedId = document.getElementById("breedId").value;
-    } else {
-      //if this is running on its own and ID is not available from proxy
-      var breedId = Math.ceil(Math.random() * 100);
-    } 
-
+  componentDidMount() {
+    var breedId = Number.parseFloat(window.location.pathname.replace(/^\/+|\/+$/g, ''));
+    if (Number.isNaN(breedId)) {
+      breedId = 1;
+    }
     this.setState({
       breedId: breedId 
+    }, () => {
+      console.log(this.state, ' the state')
+      this.dogFinder();
+      this.getLocation();
+      this.getBreedName(this.state.breedId); //this will eventually be the id in the URL
     })
-  }
-  
-  componentWillMount () {
-    //will remove this later when breed Id is attached to URL
-    this.setBreedId();
-  }
+    
 
-  componentDidMount() {
-    this.dogFinder();
-    this.getLocation();
-    this.getBreedName(this.state.breedId); //this will eventually be the id in the URL
   }
 
   render() {

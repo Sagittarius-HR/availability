@@ -17,7 +17,7 @@ function Dogs(props) {
   const dogs = props.dogs;
 
   //if no location is given
-  if (!props.location.on) {
+  if (!props.location.on && props.location.latitude === 0) {
     console.log('on is false')
     const refinedDogs = dogs.slice(0,4);
 
@@ -97,7 +97,6 @@ function Dogs(props) {
       }
     }
 
-
     const refinedDogs = onlyNearbyDogs.slice(0,4);
 
     const dogList = refinedDogs.map((dog) => {
@@ -108,7 +107,7 @@ function Dogs(props) {
       <StyledDiv>
         <div className='dogList'>
           {dogList}
-          <MeetThem dogs={props.dogs} breedId={props.breedId} />
+          <MeetThem dogs={onlyNearbyDogs} breedId={props.breedId} breed={props.breed}/>
         </div>
       </StyledDiv>
     );
