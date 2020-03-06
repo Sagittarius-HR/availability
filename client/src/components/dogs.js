@@ -4,9 +4,12 @@ import MeetThem from './meetThem.js'
 import style from 'styled-components'
 
 const StyledDiv = style.div`
-  width: 80%;
-  height: 300px;
-  margin: auto;
+  width: 100%;
+  height: 320px;
+  position absolute;
+  left: 50%;
+  margin-left: -600px;
+  overflow: hidden;
 `;
 
 function Dogs(props) {
@@ -105,7 +108,7 @@ function Dogs(props) {
       <StyledDiv>
         <div className='dogList'>
           {dogList}
-          <MeetThem dogs={onlyNearbyDogs} breedId={props.breedId} breed={props.breed} />
+          <MeetThem dogs={props.dogs} breedId={props.breedId} />
         </div>
       </StyledDiv>
     );

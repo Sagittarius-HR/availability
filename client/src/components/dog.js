@@ -20,10 +20,7 @@ var StyledImg = style.div`
   height: 80%;
   width: 100%;
   align: middle;
-  // object-fit: contain;
   overflow: hidden;
-  // border-radius: 10px;
-  // background-image: url(${(props) => {props.img}});
 `; // height='228' width='228' 'border-radius':'10px'
 
 class Dog extends React.Component {

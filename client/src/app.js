@@ -7,6 +7,9 @@ import style from 'styled-components'
 const StyledDiv = style.div`
   width: 90%;
   margin: auto;
+  box-sizing: border-box;
+  width: 100%;
+  height: 400px;
   color: #6504b5;
   text-align: center;
 `;
@@ -125,12 +128,12 @@ class App extends React.Component {
 
   render() {
     return (
+      <StyledDiv>
       <div>
-        <StyledDiv>
-          <h1>{this.state.breed}s Availabile Nearby</h1>
-        </StyledDiv>
+        <h1>{this.state.breed}s Availabile Nearby</h1>
         <Dogs dogs={this.state.dogs} breedId={this.state.breedId} breed={this.state.breed} location={this.state.location}/>
       </div>
+      </StyledDiv>
     )
   }
 }
