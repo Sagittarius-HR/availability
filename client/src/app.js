@@ -27,6 +27,20 @@ const StyledBreedName = style.div`
   background-color: #fff;
 `;
 
+const StyledBreedImg = style.div`
+  position: relative;
+  box-sizing: border-box;
+  top: -1970px;
+  left: 12px;
+  height: 0;
+  width:0;
+  padding: 0 15px;
+  color: #4d4751;
+  font-size: 30px;
+  text-align: left;
+  background-color: #fff;
+`;
+
 var url = window.location.hostname === 'localhost' ? 'http://localhost' : 'http://ec2-54-90-115-26.compute-1.amazonaws.com';
 
 console.log('url', url);
@@ -47,7 +61,8 @@ class App extends React.Component {
       display: {
         width: 0,
         height: 0
-      }
+      },
+      breedImg: 'https://sagittarius-pups.s3-us-west-1.amazonaws.com/pups-small/aaron-bookout-3NJ_LjXXqsM-unsplash.jpg'
     }
 
     this.coordinates = this.coordinates.bind(this);
@@ -76,6 +91,17 @@ class App extends React.Component {
     })
     .catch((err) => {
       if (err) { throw err; }
+    })
+  }
+
+  breedImgFinder() {
+    var imgUrl = window.location.hostname === 'localhost' ? 'http://localhost' : 'http://ec2-54-185-0-112.us-west-2.compute.amazonaws.com';
+
+    axios.get(imgUrl + ':3001/url/' + this.state.breedId)
+      .then((data) => {
+        this.setState({
+         breedImg: data.data.url
+      })
     })
   }
 
@@ -141,6 +167,7 @@ class App extends React.Component {
     }, () => {
       console.log(this.state, ' the state')
       this.dogFinder();
+      this.breedImgFinder()
       this.getLocation();
       this.getBreedName(this.state.breedId); //this will eventually be the id in the URL
     })
@@ -158,6 +185,11 @@ class App extends React.Component {
             {this.state.breed}
           </div>  
       </StyledBreedName>
+      <StyledBreedImg>
+          <div className="breedImgDiv">
+            <img src={this.state.breedImg} className="breedImg" width='285px' height='190px'></img>
+          </div>  
+      </StyledBreedImg>
       <StyledDiv>
         <div>
           <h1>{this.state.breed}s Availabile Nearby</h1>
