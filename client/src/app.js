@@ -5,13 +5,26 @@ import Dogs from './components/dogs.js';
 import style from 'styled-components'
 
 const StyledDiv = style.div`
-  width: 90%;
+  width: 100%
   margin: auto;
   box-sizing: border-box;
-  width: 100%;
   height: 400px;
   color: #6504b5;
   text-align: center;
+`;
+
+const StyledBreedName = style.div`
+  position: relative;
+  box-sizing: border-box;
+  top: -2055px;
+  left: 10px;
+  width: 700px;
+  padding: 0 15px;
+  height: 35px;
+  color: #4d4751;
+  font-size: 30px;
+  text-align: left;
+  background-color: #fff;
 `;
 
 var url = window.location.hostname === 'localhost' ? 'http://localhost' : 'http://ec2-54-90-115-26.compute-1.amazonaws.com';
@@ -30,10 +43,24 @@ class App extends React.Component {
         on: false,
         latitude: 40.930,
         longitude: -74.041
+      },
+      display: {
+        width: 0,
+        height: 0
       }
     }
 
     this.coordinates = this.coordinates.bind(this);
+    this.windowDimensions = this.windowDimensions.bind(this);
+  }
+
+  windowDimensions() {
+    this.setState({
+      display: {
+        width: window.innerWidth,
+        height: window.innerHeight
+      }
+    })
   }
 
   dogFinder() {
@@ -104,6 +131,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    window.addEventListener("resize", this.windowDimensions);
     var breedId = Number.parseFloat(window.location.pathname.replace(/^\/+|\/+$/g, ''));
     if (Number.isNaN(breedId)) {
       breedId = 1;
@@ -116,18 +144,27 @@ class App extends React.Component {
       this.getLocation();
       this.getBreedName(this.state.breedId); //this will eventually be the id in the URL
     })
-    
+  }
 
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.windowDimensions);
   }
 
   render() {
     return (
-      <StyledDiv>
       <div>
-        <h1>{this.state.breed}s Availabile Nearby</h1>
-        <Dogs dogs={this.state.dogs} breedId={this.state.breedId} breed={this.state.breed} location={this.state.location}/>
-      </div>
+      <StyledBreedName>
+          <div className="breedName">
+            {this.state.breed}
+          </div>  
+      </StyledBreedName>
+      <StyledDiv>
+        <div>
+          <h1>{this.state.breed}s Availabile Nearby</h1>
+          <Dogs dogs={this.state.dogs} breedId={this.state.breedId} breed={this.state.breed} location={this.state.location} display={this.state.display}/>
+        </div>
       </StyledDiv>
+      </div>
     )
   }
 }

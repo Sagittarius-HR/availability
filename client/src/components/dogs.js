@@ -6,11 +6,11 @@ import style from 'styled-components'
 const StyledDiv = style.div`
   width: 100%;
   height: 320px;
-  position absolute;
+  position absolute;  
   left: 50%;
-  margin-left: -600px;
-  overflow: hidden;
-`;
+  min-width: 732px;
+  margin-left: ${props => (props.width/2 - props.displayNum * 157 > 0 ? (-(props.displayNum * 157)+'px') : -(props.width/2-20)+'px')};  
+  `;
 
 function Dogs(props) {
 
@@ -97,17 +97,28 @@ function Dogs(props) {
       }
     }
 
-    const refinedDogs = onlyNearbyDogs.slice(0,4);
+    
+    var displayNum;
+
+    if (props.display.width >= 1250) {
+      displayNum = 4;
+    } else if (props.display.width < 1250 && window.innerWidth >= 995) {
+      displayNum = 3;
+    } else {
+      displayNum = 2;
+    }
+    
+    const refinedDogs = onlyNearbyDogs.slice(0, displayNum);
 
     const dogList = refinedDogs.map((dog) => {
       return <Dog dog={dog} key={dog._id}/>
     })
   
     return (
-      <StyledDiv>
+      <StyledDiv displayNum={displayNum} width={window.innerWidth}>
         <div className='dogList'>
           {dogList}
-          <MeetThem dogs={onlyNearbyDogs} breedId={props.breedId} breed={props.breed}/>
+          <MeetThem dogs={onlyNearbyDogs} breedId={props.breedId} breed={props.breed} displayNum={displayNum}/>
         </div>
       </StyledDiv>
     );

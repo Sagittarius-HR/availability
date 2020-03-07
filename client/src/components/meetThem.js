@@ -29,6 +29,7 @@ var StyledInfo = style.div`
   float: left;
   line-height: 150%;
   position: relative;
+  white-space: normal;
 `;
 
 var StyledSubDiv = style.div`
@@ -57,7 +58,7 @@ function MeetThem(props) {
         <img src='https://availabledogphotos.s3.amazonaws.com/paw.png'></img>
         <br></br>
         <br></br>
-        {Math.max(props.dogs.length - 4, 0)} more {props.breed}s
+        {Math.max(props.dogs.length - props.displayNum, 0)} more {props.breed}s
         available for adoption
         <br></br>     
       </StyledInfo>
