@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const bodyParser = require('body-parser');
 const AvailableDogs = require('../database/availability.js');
 
@@ -22,6 +23,10 @@ app.get('/getAllMatchingBreed', (req, res) => {
     res.send(dogs);
   })
 })
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname,'../client/dist/index.html'));
+});
 
 const port = 3003;
 app.listen(port, () => console.log(`The server is Running on port ${port}!`));
