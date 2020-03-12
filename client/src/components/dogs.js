@@ -4,17 +4,20 @@ import MeetThem from './meetThem.js'
 import style from 'styled-components'
 
 const StyledDiv = style.div`
-  width: 80%;
-  height: 300px;
-  margin: auto;
-`;
+  width: 100%;
+  height: 320px;
+  position absolute;  
+  left: 50%;
+  min-width: 732px;
+  margin-left: ${props => (props.width/2 - props.displayNum * 157 > 0 ? (-(props.displayNum * 157)+'px') : -(props.width/2-20)+'px')};  
+  `;
 
 function Dogs(props) {
 
   const dogs = props.dogs;
 
   //if no location is given
-  if (!props.location.on) {
+  if (!props.location.on && props.location.latitude === 0) {
     console.log('on is false')
     const refinedDogs = dogs.slice(0,4);
 
@@ -94,18 +97,28 @@ function Dogs(props) {
       }
     }
 
+    
+    var displayNum;
 
-    const refinedDogs = onlyNearbyDogs.slice(0,4);
+    if (props.display.width >= 1250) {
+      displayNum = 4;
+    } else if (props.display.width < 1250 && window.innerWidth >= 995) {
+      displayNum = 3;
+    } else {
+      displayNum = 2;
+    }
+    
+    const refinedDogs = onlyNearbyDogs.slice(0, displayNum);
 
     const dogList = refinedDogs.map((dog) => {
       return <Dog dog={dog} key={dog._id}/>
     })
   
     return (
-      <StyledDiv>
+      <StyledDiv displayNum={displayNum} width={window.innerWidth}>
         <div className='dogList'>
           {dogList}
-          <MeetThem dogs={onlyNearbyDogs} breedId={props.breedId} breed={props.breed} />
+          <MeetThem dogs={onlyNearbyDogs} breedId={props.breedId} breed={props.breed} displayNum={displayNum}/>
         </div>
       </StyledDiv>
     );
